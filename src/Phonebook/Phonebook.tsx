@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 
 const Phonebook = () => {
-    const [persons, setPersons] = useState([
-        { id: 1, name: 'Arto Hellas', number: '111-222333' },
-        { id: 2, name: 'Bert Madness', number: '111-444555' },
-        { id: 3, name: 'Calvin Gerard', number: '111-666777' },
-    ]);
+    const [persons, setPersons] = useState<
+        { id: number; name: string; number: string }[]
+    >([]);
     const [newName, setNewName] = useState('');
     const [newNumber, setNewNumber] = useState('');
     const [newNameFilter, setNewNameFilter] = useState('');
+
+    useEffect(() => {
+        console.log('effect');
+        axios.get('http://localhost:3001/persons').then((response) => {
+            const persons = response.data;
+            console.log(persons);
+            setPersons(persons);
+        });
+    }, []);
+    console.log('render', persons.length, 'notes');
 
     const checkForNameRepeat = (personObject: {
         id: number;
