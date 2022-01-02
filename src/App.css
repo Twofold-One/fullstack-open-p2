@@ -14,3 +14,21 @@ div,
 p {
     padding: 10px;
 }
+
+li {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+.country-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flag {
+    border: 1px solid black;
+}
