@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, HtmlHTMLAttributes } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import CountryData from './components/CountryData';
 
@@ -49,7 +49,6 @@ const DataForCountries = () => {
                     placeholder={'Country name'}
                 />
             </div>
-            {/* TODO Fix logic: use switch */}
             <div>
                 {countries.length === 1
                     ? countries.map((country) => (
@@ -58,7 +57,7 @@ const DataForCountries = () => {
                               country={country}
                           />
                       ))
-                    : countries.length <= 10
+                    : countries.length <= 10 && countries.length >= 2
                     ? countries.map((country, index) => (
                           <div
                               key={country.name.official}
