@@ -3,6 +3,7 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import personsService from './services/persons';
+import Notification from './components/Notification';
 
 const Phonebook = () => {
     const [persons, setPersons] = useState<
@@ -11,6 +12,7 @@ const Phonebook = () => {
     const [newName, setNewName] = useState('');
     const [newNumber, setNewNumber] = useState('');
     const [newNameFilter, setNewNameFilter] = useState('');
+    const [notification, setNotification] = useState<string | null>(null);
 
     useEffect(() => {
         personsService.getAll().then((initialPersons) => {
@@ -67,7 +69,21 @@ const Phonebook = () => {
                             : returnedPerson
                     )
                 )
-            );
+            )
+            .catch((error) => {
+                setNotification(
+                    `Information of ${personWithChangedNumber.name} has already been removed from server`
+                );
+                setTimeout(() => {
+                    setNotification(null);
+                }, 3000);
+            });
+        setNotification(
+            `${personWithChangedNumber.name} number was changed to ${personWithChangedNumber.number}`
+        );
+        setTimeout(() => {
+            setNotification(null);
+        }, 3000);
     };
 
     const addName = (event: React.FormEvent) => {
@@ -94,6 +110,10 @@ const Phonebook = () => {
         } else {
             personsService.create(personObject).then((returnedPerson) => {
                 setPersons(persons.concat(returnedPerson));
+                setNotification(`Added ${personObject.name}`);
+                setTimeout(() => {
+                    setNotification(null);
+                }, 3000);
             });
         }
 
@@ -135,6 +155,7 @@ const Phonebook = () => {
     return (
         <div>
             <h1>Phonebook</h1>
+            <Notification message={notification} />
             <Filter
                 newNameFilter={newNameFilter}
                 handleNameFilterInputChange={handleNameFilterInputChange}

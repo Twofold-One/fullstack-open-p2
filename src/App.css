@@ -24,6 +24,15 @@ button {
     cursor: pointer;
 }
 
+input {
+    margin-left: 10px;
+}
+
+input:hover {
+    box-shadow: 1px 1px 10px rgb(218, 218, 218);
+    border: 2px solid grey;
+}
+
 /* phonebook app */
 .persons {
     display: flex;
@@ -41,6 +50,36 @@ button {
 }
 .delete:active {
     transform: scale(1.1);
+}
+
+.notification {
+    background-color: rgb(20, 68, 20);
+    border: 1px solid lightgreen;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 1px 1px 10px green;
+}
+
+.notification.error {
+    background-color: rgb(172, 81, 81);
+    border: 1px solid red;
+    box-shadow: 1px 1px 10px red;
+}
+
+.add-btn {
+    padding: 10px;
+    width: 30%;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.add-btn:hover {
+    background-color: lightgrey;
+}
+
+.add-btn:active {
+    transform: scale(0.9);
 }
 
 /* flags app */
