@@ -41,6 +41,35 @@ const Phonebook = () => {
         return repeat.length === 0 ? false : true;
     };
 
+    // Harsh one to understand, guess i'll not be able
+    // to figure out or remember what's happening here
+    const changeNubmerOfPerson = (personObject: {
+        id?: number;
+        name: string;
+        number: string;
+    }) => {
+        const person = persons.find((p) => p.name === personObject.name);
+        const personWithChangedNumber = person
+            ? {
+                  ...person,
+                  number: personObject.number,
+              }
+            : personObject;
+        const personId = person ? person.id.toString() : '';
+
+        personsService
+            .replace(personId, personWithChangedNumber)
+            .then((returnedPerson) =>
+                setPersons(
+                    persons.map((person) =>
+                        person.name !== personObject.name
+                            ? person
+                            : returnedPerson
+                    )
+                )
+            );
+    };
+
     const addName = (event: React.FormEvent) => {
         event.preventDefault();
         const personObject = {
@@ -48,19 +77,26 @@ const Phonebook = () => {
             number: newNumber,
         };
 
-        // ToDo
         const nameRepeat = checkForNameRepeat(personObject);
         const numberRepeat = checkForNubmerRepeat(personObject);
 
-        switch (nameRepeat && numberRepeat) {
+        if (nameRepeat && numberRepeat) {
+            alert(`${newName} is already added`);
+        } else if (nameRepeat && !numberRepeat) {
+            console.log('implemented person number change functionality');
+            if (
+                window.confirm(
+                    `${personObject.name} is already added to phonebook, replace old number with a new one?`
+                )
+            ) {
+                changeNubmerOfPerson(personObject);
+            }
+        } else {
+            personsService.create(personObject).then((returnedPerson) => {
+                setPersons(persons.concat(returnedPerson));
+            });
         }
-        //
 
-        checkForNameRepeat(personObject)
-            ? alert(`${newName} is already added`)
-            : personsService.create(personObject).then((returnedPerson) => {
-                  setPersons(persons.concat(returnedPerson));
-              });
         setNewName('');
         setNewNumber('');
     };

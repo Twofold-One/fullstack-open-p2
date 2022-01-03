@@ -23,5 +23,18 @@ const deletePerson = async (id: string) => {
     return response.data;
 };
 
-const personsService = { getAll, create, deletePerson };
+const replace = async (
+    id: string,
+    newObject: {
+        id?: number;
+        name: string;
+        number: string;
+    }
+) => {
+    const request = axios.put(`${baseUrl}/${id}`, newObject);
+    const response = await request;
+    return response.data;
+};
+
+const personsService = { getAll, create, deletePerson, replace };
 export default personsService;
