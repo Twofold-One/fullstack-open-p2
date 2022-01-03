@@ -1,3 +1,4 @@
+/* common */
 *,
 *::after,
 *::before {
@@ -23,6 +24,26 @@ button {
     cursor: pointer;
 }
 
+/* phonebook app */
+.persons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete {
+    padding: 5px;
+    border-radius: 5px;
+}
+.delete:hover {
+    background-color: red;
+    color: white;
+}
+.delete:active {
+    transform: scale(1.1);
+}
+
+/* flags app */
 .country-element {
     display: flex;
     justify-content: center;

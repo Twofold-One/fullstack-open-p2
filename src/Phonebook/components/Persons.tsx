@@ -3,9 +3,14 @@ import React from 'react';
 interface PersonsProps {
     persons: { id: number; name: string; number: string }[];
     newNameFilter: string;
+    handleDeleteButtonClick: any;
 }
 
-const Persons = ({ persons, newNameFilter }: PersonsProps) => {
+const Persons = ({
+    persons,
+    newNameFilter,
+    handleDeleteButtonClick,
+}: PersonsProps) => {
     return (
         <ul>
             {persons
@@ -15,7 +20,17 @@ const Persons = ({ persons, newNameFilter }: PersonsProps) => {
                         .includes(newNameFilter.toLocaleLowerCase());
                 })
                 .map((person) => (
-                    <p key={person.id}>{`${person.name} ${person.number}`}</p>
+                    <div key={person.id} className="persons">
+                        <p>{`${person.name} ${person.number}`}</p>
+                        <button
+                            className="delete"
+                            id={person.id.toString()}
+                            name={person.name}
+                            onClick={handleDeleteButtonClick}
+                        >
+                            Delete
+                        </button>
+                    </div>
                 ))}
         </ul>
     );
