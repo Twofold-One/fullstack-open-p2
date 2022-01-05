@@ -139,13 +139,13 @@ const Phonebook = () => {
         setNewNameFilter(event.target.value);
     };
 
-    const handleDeleteButtonClick = (
+    const handleDeleteButtonClick = async (
         event: React.MouseEvent<HTMLButtonElement>
     ) => {
         const personId = event.currentTarget.id;
         const personName = event.currentTarget.name;
         if (window.confirm(`Delete ${personName} ?`)) {
-            personsService.deletePerson(personId);
+            await personsService.deletePerson(personId);
             personsService.getAll().then((initialPersons) => {
                 setPersons(initialPersons);
             });
