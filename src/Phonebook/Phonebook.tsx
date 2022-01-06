@@ -108,13 +108,18 @@ const Phonebook = () => {
                 changeNubmerOfPerson(personObject);
             }
         } else {
-            personsService.create(personObject).then((returnedPerson) => {
-                setPersons(persons.concat(returnedPerson));
-                setNotification(`Added ${personObject.name}`);
-                setTimeout(() => {
-                    setNotification(null);
-                }, 3000);
-            });
+            personsService
+                .create(personObject)
+                .then((returnedPerson) => {
+                    setPersons(persons.concat(returnedPerson));
+                    setNotification(`Added ${personObject.name}`);
+                    setTimeout(() => {
+                        setNotification(null);
+                    }, 3000);
+                })
+                .catch((error) => {
+                    console.log(error.response.data);
+                });
         }
 
         setNewName('');
